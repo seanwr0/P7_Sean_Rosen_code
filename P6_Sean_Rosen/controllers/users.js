@@ -50,9 +50,14 @@ exports.createUser = (req, res, next) => {
 
 // checks if user exists, and if the passwords match, returns a token
 exports.checkUser = (req, res, next) => {
-
-
-then((user) => {
+  (async function () {
+    let user = await User.findOne({
+      where: {
+        email: req.body.email
+      }
+    });
+    return user;
+  })().then((user) => {
     bcrypt.compare(req.body.password, user.passWord).then(
       (valid) => {
         if (!valid) {
