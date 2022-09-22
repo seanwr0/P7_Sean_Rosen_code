@@ -1,4 +1,4 @@
-const sauces = require('../models/sauces');
+
 const fs = require('fs');
 
 // creates a sauce object and saves it to the data-base
