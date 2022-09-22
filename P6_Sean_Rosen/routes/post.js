@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 router.use(express.json());
-const saucesCtrl = require('../controllers/sauces');
+const postCtrl = require('../controllers/post');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
@@ -12,10 +12,9 @@ router.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
-router.post('/sauces', auth, multer, saucesCtrl.createSauce);
-router.get('/sauces',  saucesCtrl.getAllSauces);
-router.get('/sauces/:id',  saucesCtrl.getOneSauce);
-router.delete('/sauces/:id', auth, saucesCtrl.deleteSauce);
-router.post('/sauces/:id/like',  auth,saucesCtrl.setLike);
-router.put('/sauces/:id', auth, multer, saucesCtrl.updateSauce);
+router.post('/sauces', auth, multer, postCtrl.createPost);
+router.get('/sauces',  postCtrl.getAllPost);
+router.get('/sauces/:id',  postCtrl.getOnePost);
+
+
 module.exports = router;
