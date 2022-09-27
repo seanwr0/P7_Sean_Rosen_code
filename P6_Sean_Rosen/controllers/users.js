@@ -23,11 +23,16 @@ exports.createUser = (req, res, next) => {
 
       (async function () {
         await sequelize.sync({});
-        const jane = User.build({
+        const newUser = User.build({
           passWord: hash,
-          email: req.body.email
+          email: req.body.userEmail,
+          firstName: req.body.fName,
+          lastName: req.body.lName
+
+
+
         });
-        await jane.save();
+        await newUser.save();
       })().then(
         () => {
           res.status(201).json({
