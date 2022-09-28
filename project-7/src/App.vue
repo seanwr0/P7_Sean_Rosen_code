@@ -4,43 +4,26 @@
     <img alt="logo" src="./assets/icon-text.png">
 
     <ul id="profile">
-      <li @click="signupShow = !signupShow,signInShow = false">sign-up</li>
-      <li @click="signInShow = !signInShow, signupShow = false">sign-in</li>
+      <router-link to="/">SignIn</router-link>
+      <router-link to="/signUp">SignUp</router-link>
+      <router-link to="/profile">Profile</router-link>
     </ul>
 
   </div>
 
-  <div class="body" v-if="signupShow === true" >
-    <SignUp/>
-  </div>
-
-  <div class="body" v-if="signInShow === true" >
-    <SignIn/>
+  <div id="body">
+    <router-view />
   </div>
 
 </template>
-
+ 
 <script>
-import SignUp from './components/signUp.vue'
-import SignIn from './components/signIn.vue'
-
 export default {
   name: 'App',
-  components: {
-    SignUp,
-    SignIn
-},
-
-  data() {
-    return {
-      signupShow: true,
-      signInShow: true
-  }
-}
 
 }
 </script>
-
+ 
 <style lang="scss">
 #app {
   display: flex;
@@ -57,21 +40,25 @@ export default {
   width: 100%;
   background-color: #d1515a;
   min-width: 360px;
-
-  ul {
-    list-style: none;
-
-    li {
-      border: 5px;
-    }
-
+}
+#profile{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 5px;
+  a{
+  text-decoration: none;
+  color: white;
   }
 }
 
-.body {
+#body {
   display: flex;
   justify-content: center;
   width: 100%;
   height: 1000px;
 }
 </style>
+ 
+ 
+

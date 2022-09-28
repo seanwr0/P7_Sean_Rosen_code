@@ -71,13 +71,13 @@ exports.checkUser = (req, res, next) => {
           });
         }
         const token = jwt.sign({
-            userId: "12345"
+            userId: user.id,
           },
           'RANDOM_TOKEN_SECRET', {
             expiresIn: '24h'
           });
         res.status(200).json({
-          userId: "12345",
+          userId: user.id,
           token: token
         });
       }
