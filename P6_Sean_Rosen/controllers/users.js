@@ -58,7 +58,7 @@ exports.checkUser = (req, res, next) => {
   (async function () {
     let user = await User.findOne({
       where: {
-        email: req.body.email
+        email: req.body.userEmail
       }
     });
     return user;

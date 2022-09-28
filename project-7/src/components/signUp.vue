@@ -35,10 +35,8 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
+  name: 'signUp',
+
   data() {
     return {
       firstName: "",
@@ -57,10 +55,10 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          fName: "",
-          lName: "",
-          userEmail: "",
-          password: ""
+          fName: this.firstName,
+          lName: this.lastName,
+          userEmail: this.email,
+          password: this.passWord
 
         })
       })
@@ -84,7 +82,7 @@ export default {
   width: 70%;
   min-width: 360px;
   height: 500px;
-  background-color: green;
+  background-color: #091f43;
 
   form {
     display: flex;
