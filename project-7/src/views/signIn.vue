@@ -49,11 +49,16 @@ export default {
         })
       })
         .then(response => response.json())
-        .then(data => window.localStorage.setItem('user', JSON.stringify(data.userId)))
-        .then( data => alert(data),)
+        .then(data => saveToLocalStorage(data))
+
+      function saveToLocalStorage(data) {
+        localStorage.setItem('user', JSON.stringify(data.userId));
+        console.log(data);
+      }
     }
   }
 }
+
 </script>
 
 

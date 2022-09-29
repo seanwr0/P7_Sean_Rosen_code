@@ -15,9 +15,14 @@ let {
   User
 } = require('../models/user');
 
-
 // saves email and password to data base, checks if email is unique, hashes the password
 exports.createUser = (req, res, next) => {
+
+  if (!req.body.fName || !req.body.lName  || !req.body.userEmail || !req.body.password ) {
+    return res.status(401).json({
+      error: new Error('needs user info')
+    });
+  }
   bcrypt.hash(req.body.password, 10).then(
     (hash) => {
 
@@ -28,9 +33,6 @@ exports.createUser = (req, res, next) => {
           email: req.body.userEmail,
           firstName: req.body.fName,
           lastName: req.body.lName
-
-
-
         });
         await newUser.save();
       })().then(
@@ -49,10 +51,6 @@ exports.createUser = (req, res, next) => {
     })
 };
 
-
-
-
-
 // checks if user exists, and if the passwords match, returns a token
 exports.checkUser = (req, res, next) => {
   (async function () {
@@ -63,6 +61,12 @@ exports.checkUser = (req, res, next) => {
     });
     return user;
   })().then((user) => {
+
+    if (!user) {
+      return res.status(401).json({
+        error: new Error('no such user!')
+      });
+    }
     bcrypt.compare(req.body.password, user.passWord).then(
       (valid) => {
         if (!valid) {

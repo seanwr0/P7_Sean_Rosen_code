@@ -14,20 +14,20 @@ User = sequelize.define('User', {
     // Model attributes are defined here
     firstName: {
         type: DataTypes.STRING,
-        // allowNull: false
+        allowNull: false
     },
     lastName: {
         type: DataTypes.STRING,
-        // allowNull: false
+        allowNull: false
     },
     email: {
         type: DataTypes.STRING,
-        // allowNull: false,
+        allowNull: false,
         unique: true
     },
     passWord: {
         type: DataTypes.STRING,
-        // allowNull: false
+        allowNull: false
     },
     
 
@@ -37,4 +37,3 @@ User = sequelize.define('User', {
 
 
 module.exports = {User};
-
