@@ -5,21 +5,21 @@
 
         <span>
             <p>First Name</p>
-            <p>{{firstName}}</p>
+            <p>{{userInfo.firstName}}</p>
         </span>
 
         <span>
             <p>Last Name</p>
-            <p>{{lastName}}</p>
+            <p>{{userInfo.lastName}}</p>
         </span>
 
         <span>
             <p>Email</p>
-            <p>{{email}}</p>
+            <p>{{userInfo.email}}</p>
         </span>
 
 
-        <button>Delete</button>
+        <button >Delete</button>
 
 
 
@@ -35,29 +35,34 @@ export default {
 
     data() {
         return {
-            firstName: "d",
-            lastName: "d",
-            email: "d"
+            userInfo: {}
         }
     },
 
     methods: {
         getUserInfo() {
-
-            fetch('http://localhost:3000/api/auth/profile')
-                .then((response) => response.json())
-                .then((data) => console.log(data));
-
-
+            const Id = localStorage.getItem('user');
+            fetch('http://localhost:3000/api/auth/profile', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: Id,
+                })
+            })
+                .then(response => response.json())
+                .then(data => this.userInfo = data)
         }
-    }
+    },
+
+    created: function(){
+        this.getUserInfo()
+}
 }
 
 </script>
-  
-  
-  
-  
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">

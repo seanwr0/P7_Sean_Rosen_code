@@ -13,5 +13,6 @@ router.use((req, res, next) => {
 });
 router.post('/signup', userCtrl.createUser);
 router.post('/login', userCtrl.checkUser)
+router.post('/profile', userCtrl.getOneUser)
 
 module.exports = router;

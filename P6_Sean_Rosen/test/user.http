@@ -6,12 +6,11 @@ GET {{baseUrl}}/
 ###
 
 # Signs up a new user
-POST {{baseUrl}}/signup
+POST {{baseUrl}}/profile
 content-type: application/json
 
 {
-    "firstName": "Bruce ",
-    "lastName": "wayne",
-    "password": "secret123",
-    "email": "bruceawayne@gotham.com"
+    "userId": "52",
+   
 }
+

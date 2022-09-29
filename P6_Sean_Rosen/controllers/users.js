@@ -90,3 +90,26 @@ exports.checkUser = (req, res, next) => {
     )
   })
 }
+
+
+// gets one item from the data-base by matching it against an id
+exports.getOneUser = (req, res, next) => {
+  (async function () {
+    let user = await User.findOne({
+      where: {
+        id: req.body.userId
+      }
+    });
+    return user;
+  })().then(
+    (user) => {
+      res.status(200).json(user);
+    }
+  ).catch(
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
+}

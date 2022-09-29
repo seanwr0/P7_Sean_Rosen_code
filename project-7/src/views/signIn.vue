@@ -49,7 +49,8 @@ export default {
         })
       })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => window.localStorage.setItem('user', JSON.stringify(data.userId)))
+        .then( data => alert(data),)
     }
   }
 }
