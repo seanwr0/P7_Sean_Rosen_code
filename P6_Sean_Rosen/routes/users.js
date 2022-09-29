@@ -3,7 +3,7 @@ const router = express.Router();
 router.use(express.json());
 const userCtrl = require('../controllers/users');
 
-
+const auth = require('../middleware/auth');
 
 router.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,7 +13,7 @@ router.use((req, res, next) => {
 });
 router.post('/signup', userCtrl.createUser);
 router.post('/login', userCtrl.checkUser)
-router.post('/profile',  userCtrl.getOneUser)
-router.delete('/profile',  userCtrl.deleteUser)
+router.post('/profile', auth, userCtrl.getOneUser)
+router.delete('/profile', auth,  userCtrl.deleteUser)
 
 module.exports = router;

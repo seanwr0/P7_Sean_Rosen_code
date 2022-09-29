@@ -41,18 +41,18 @@ export default {
 
     methods: {
         getUserInfo() {
-            const Id = localStorage.getItem('id');
-            const token = localStorage.getItem('token');
-
+            const Id = parseInt(localStorage.getItem('id'));
+            let token = localStorage.getItem('token');
+            token = token.replaceAll('"', '');
             fetch('http://localhost:3000/api/auth/profile', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer' + ' ' + token
                 },
                 body: JSON.stringify({
                     userId: Id,
-                    token: token,
                 })
             })
                 .then(response => response.json())
@@ -61,18 +61,21 @@ export default {
 
 
         deleteProfile() {
-            const Id = localStorage.getItem('id');
-            const token = localStorage.getItem('token');
+            const Id = parseInt(localStorage.getItem('id'));
+            let token = localStorage.getItem('token');
+            token = token.replaceAll('"', '');
 
             fetch('http://localhost:3000/api/auth/profile', {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer' + ' ' + token
                 },
                 body: JSON.stringify({
                     userId: Id,
-                    token: token,
+                    
+                   
                 })
             })
                 .then(response => response.json())
