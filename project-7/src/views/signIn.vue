@@ -52,7 +52,8 @@ export default {
         .then(data => saveToLocalStorage(data))
 
       function saveToLocalStorage(data) {
-        localStorage.setItem('user', JSON.stringify(data.userId));
+        localStorage.setItem('id', JSON.stringify(data.userId));
+        localStorage.setItem('token', JSON.stringify(data.token));
         console.log(data);
       }
     }

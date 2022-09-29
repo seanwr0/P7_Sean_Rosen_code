@@ -19,7 +19,7 @@
         </span>
 
 
-        <button >Delete</button>
+        <button @click="deleteProfile">Delete</button>
 
 
 
@@ -41,7 +41,9 @@ export default {
 
     methods: {
         getUserInfo() {
-            const Id = localStorage.getItem('user');
+            const Id = localStorage.getItem('id');
+            const token = localStorage.getItem('token');
+
             fetch('http://localhost:3000/api/auth/profile', {
                 method: 'POST',
                 headers: {
@@ -50,16 +52,40 @@ export default {
                 },
                 body: JSON.stringify({
                     userId: Id,
+                    token: token,
                 })
             })
                 .then(response => response.json())
                 .then(data => this.userInfo = data)
+        },
+
+
+        deleteProfile() {
+            const Id = localStorage.getItem('id');
+            const token = localStorage.getItem('token');
+
+            fetch('http://localhost:3000/api/auth/profile', {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: Id,
+                    token: token,
+                })
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
         }
+
+
+
     },
 
-    created: function(){
+    created: function () {
         this.getUserInfo()
-}
+    }
 }
 
 </script>
