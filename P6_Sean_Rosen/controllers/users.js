@@ -1,12 +1,14 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+require('dotenv').config();
 const {
   Sequelize,
   DataTypes
 } = require('sequelize');
 
-const sequelize = new Sequelize('project7', 'postgres', 'postgrespass', {
+
+
+const sequelize = new Sequelize('project7', 'postgres',   process.env.postGresPass,{
   host: 'localhost',
   dialect: 'postgres'
 });
@@ -17,8 +19,7 @@ let {
 
 // saves email and password to data base, checks if email is unique, hashes the password
 exports.createUser = (req, res, next) => {
-
-  if (!req.body.fName || !req.body.lName  || !req.body.userEmail || !req.body.password ) {
+  if (!req.body.fName || !req.body.lName || !req.body.userEmail || !req.body.password) {
     return res.status(401).json({
       error: new Error('needs user info')
     });
@@ -64,7 +65,8 @@ exports.checkUser = (req, res, next) => {
 
     if (!user) {
       return res.status(401).json({
-        error: new Error('no such user!')
+        error: new Error('no such user!').
+        console.log(dataPass)
       });
     }
     bcrypt.compare(req.body.password, user.passWord).then(
@@ -82,6 +84,7 @@ exports.checkUser = (req, res, next) => {
           });
         res.status(200).json({
           userId: user.id,
+          name: user.firstName + ' ' + user.lastName,
           token: token
         });
       }
@@ -129,7 +132,7 @@ exports.deleteUser = (req, res, next) => {
     return user;
   })().then(
     (user) => {
-       user.destroy();
+      user.destroy();
 
       res.status(200).json(user);
     }

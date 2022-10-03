@@ -1,8 +1,11 @@
 <template>
 
   <div id="submit-form">
+    
+
     <h2> SignIn</h2>
-    <form @submit.prevent="handleSubmit">
+
+    <form @submit="handleSubmit">
       <span>
         <p>Email</p>
         <input type="email" v-model="email" />
@@ -14,7 +17,6 @@
       </span>
 
       <button>submit</button>
-
     </form>
 
   </div>
@@ -30,12 +32,14 @@ export default {
   data() {
     return {
       email: "",
-      passWord: ""
+      passWord: "",
+      error: ""
     }
   },
 
   methods: {
     handleSubmit() {
+
       fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -50,12 +54,15 @@ export default {
       })
         .then(response => response.json())
         .then(data => saveToLocalStorage(data))
+    
 
       function saveToLocalStorage(data) {
         localStorage.setItem('id', JSON.stringify(data.userId));
         localStorage.setItem('token', JSON.stringify(data.token));
-        console.log(data);
+        localStorage.setItem('name', JSON.stringify(data.name));
+
       }
+
     }
   }
 }
@@ -106,4 +113,6 @@ export default {
     width: 275px;
   }
 }
+
+
 </style>

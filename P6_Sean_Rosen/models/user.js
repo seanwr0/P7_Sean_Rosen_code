@@ -3,8 +3,10 @@ const {
     DataTypes,
     UniqueConstraintError
 } = require('sequelize');
+require('dotenv').config();
 
-const sequelize = new Sequelize('project7', 'postgres', 'postgrespass', {
+
+const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
     host: 'localhost',
     dialect: 'postgres'
 });

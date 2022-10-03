@@ -1,13 +1,18 @@
 <template>
 
   <div id="header">
-    <img alt="logo" src="./assets/icon-text.png">
+    <img alt="Groupomania Logo" src="./assets/icon-text.png">
 
-    <ul id="profile">
+    <h2>{{name}}</h2>
+
+    <div id="profile">
       <router-link to="/">SignIn</router-link>
       <router-link to="/signUp">SignUp</router-link>
-      <router-link to="/profile">Profile</router-link>
-    </ul>
+
+      <p @click="handleSignOut">SignOut</p>
+
+      <router-link to="/profile"> Profile </router-link>
+    </div>
 
   </div>
 
@@ -21,7 +26,35 @@
 export default {
   name: 'App',
 
+data(){
+  return{
+
+    name: ""
+  }
+},
+  methods: {
+    handleSignOut() {
+      localStorage.clear();
+    },
+
+    getName(){
+       let Name = localStorage.getItem('name');
+       if(Name){
+       this.name = Name
+       }
+       
+    }
+
+  },
+
+  created: function () {
+        this.getName()
+    }
+
+
 }
+
+
 </script>
  
 <style lang="scss">
@@ -32,23 +65,52 @@ export default {
   height: 1000px;
   flex-wrap: wrap;
   gap: 10px;
-}
 
-#header {
-  margin: 0px;
-  height: 150px;
-  width: 100%;
-  background-color: #d1515a;
-  min-width: 360px;
-}
-#profile{
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  gap: 5px;
-  a{
-  text-decoration: none;
-  color: white;
+
+  #header {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    height: 150px;
+    width: 100%;
+    background-color: #d1515a;
+    min-width: 360px;
+
+    h2 {
+      position: relative;
+      bottom: 50px;
+      size: 12px;
+      align-self: end;
+      width: 55px;
+      margin-right: 50px;
+    }
+
+    img {
+      width: 280px;
+      height: 50px;
+    }
+  }
+
+  #profile {
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    width: 55px;
+    gap: 5px;
+    position: relative;
+    bottom: 70px;
+
+    a {
+      text-decoration: none;
+      color: white;
+
+    }
+
+    p {
+      margin: 0px;
+      cursor: pointer;
+    }
   }
 }
 

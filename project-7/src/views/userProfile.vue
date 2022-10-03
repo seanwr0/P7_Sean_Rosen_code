@@ -41,6 +41,8 @@ export default {
 
     methods: {
         getUserInfo() {
+            if (localStorage.getItem('token') !== null) {
+  
             const Id = parseInt(localStorage.getItem('id'));
             let token = localStorage.getItem('token');
             token = token.replaceAll('"', '');
@@ -57,8 +59,8 @@ export default {
             })
                 .then(response => response.json())
                 .then(data => this.userInfo = data)
-        },
-
+        }
+    },
 
         deleteProfile() {
             const Id = parseInt(localStorage.getItem('id'));

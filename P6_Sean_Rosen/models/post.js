@@ -4,7 +4,9 @@ const {
     UniqueConstraintError
 } = require('sequelize');
 
-const sequelize = new Sequelize('project7', 'postgres', 'postgrespass', {
+let dataPass = process.env.postGresPass
+dataPass = dataPass.replace(/['"]+/g, '');
+const sequelize = new Sequelize('project7', 'postgres', dataPass, {
     host: 'localhost',
     dialect: 'postgres'
 });
