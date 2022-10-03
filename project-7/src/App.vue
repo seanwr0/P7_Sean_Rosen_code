@@ -35,12 +35,16 @@ data(){
   methods: {
     handleSignOut() {
       localStorage.clear();
+      window.location.reload()
     },
 
     getName(){
        let Name = localStorage.getItem('name');
-       if(Name){
-       this.name = Name
+       if(Name === 'undefined') {
+       this.name = ''
+       }else{
+       
+        this.name = Name
        }
        
     }
@@ -78,15 +82,15 @@ data(){
 
     h2 {
       position: relative;
-      bottom: 50px;
+      bottom: 30px;
       size: 12px;
       align-self: end;
-      width: 55px;
-      margin-right: 50px;
+      
+      margin-right: 5px;
     }
 
     img {
-      width: 280px;
+      width: 200px;
       height: 50px;
     }
   }
@@ -95,11 +99,11 @@ data(){
     margin-right: 50px;
     display: flex;
     flex-direction: column;
-    align-self: flex-end;
+    align-self: flex-start;
     width: 55px;
     gap: 5px;
     position: relative;
-    bottom: 70px;
+    bottom: 40px;
 
     a {
       text-decoration: none;

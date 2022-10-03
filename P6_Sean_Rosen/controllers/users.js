@@ -45,7 +45,7 @@ exports.createUser = (req, res, next) => {
       ).catch(
         (error) => {
           res.status(500).json({
-            error: error
+            error: 'email most be unique'
           });
         }
       );
@@ -65,15 +65,15 @@ exports.checkUser = (req, res, next) => {
 
     if (!user) {
       return res.status(401).json({
-        error: new Error('no such user!').
-        console.log(dataPass)
+        error: 'email not found!'
+        
       });
     }
     bcrypt.compare(req.body.password, user.passWord).then(
       (valid) => {
         if (!valid) {
           return res.status(401).json({
-            error: new Error('Incorrect password!')
+            error: 'Incorrect password!'
           });
         }
         const token = jwt.sign({

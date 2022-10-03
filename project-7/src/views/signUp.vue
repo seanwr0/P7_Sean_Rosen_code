@@ -48,31 +48,41 @@ export default {
 
   methods: {
     handleSubmit() {
-      fetch('http://localhost:3000/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          fName: this.firstName,
-          lName: this.lastName,
-          userEmail: this.email,
-          password: this.passWord
+      if (this.firstName == "" || this.lastName == "" || this.passWord == "") {
 
+        alert("must be a first and last name and password")
+
+      } else {
+        fetch('http://localhost:3000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            fName: this.firstName,
+            lName: this.lastName,
+            userEmail: this.email,
+            password: this.passWord
+
+          })
         })
-      })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .then( alert("account created!"))
+          .then(response => response.json())
+          .then(data => responseHandler(data))
+      }
+
+      function responseHandler(data) {
+        if(data.error){
+        return alert(data.error);
+        }else{
+          alert("account created!")
+        }
+        
+      }
     }
   }
 }
 </script>
-
-
-
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">

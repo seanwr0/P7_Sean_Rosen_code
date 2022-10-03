@@ -1,7 +1,5 @@
 <template>
-
   <div id="submit-form">
-    
 
     <h2> SignIn</h2>
 
@@ -24,7 +22,6 @@
 </template>
 
 
-
 <script>
 export default {
   name: 'signIn',
@@ -33,7 +30,7 @@ export default {
     return {
       email: "",
       passWord: "",
-      error: ""
+
     }
   },
 
@@ -54,12 +51,18 @@ export default {
       })
         .then(response => response.json())
         .then(data => saveToLocalStorage(data))
-    
 
       function saveToLocalStorage(data) {
+        let name = JSON.stringify(data.name)
+        name = name.replace(/["]+/g, '')
+
         localStorage.setItem('id', JSON.stringify(data.userId));
         localStorage.setItem('token', JSON.stringify(data.token));
-        localStorage.setItem('name', JSON.stringify(data.name));
+        localStorage.setItem('name', name);
+        window.location.reload()
+        if (data.error) {
+          alert(data.error)
+        }
 
       }
 
@@ -68,10 +71,6 @@ export default {
 }
 
 </script>
-
-
-
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
@@ -113,6 +112,4 @@ export default {
     width: 275px;
   }
 }
-
-
 </style>
