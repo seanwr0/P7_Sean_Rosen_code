@@ -81,7 +81,14 @@ export default {
                 })
             })
                 .then(response => response.json())
-                .then(data => console.log(data))
+                .then(data => deleteProfileResponse(data))
+
+function deleteProfileResponse(data) {
+    localStorage.clear()
+    window.location.reload()
+    console.log(data)
+
+}
         }
 
 

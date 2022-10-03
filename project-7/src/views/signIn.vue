@@ -53,17 +53,19 @@ export default {
         .then(data => saveToLocalStorage(data))
 
       function saveToLocalStorage(data) {
-        let name = JSON.stringify(data.name)
-        name = name.replace(/["]+/g, '')
 
-        localStorage.setItem('id', JSON.stringify(data.userId));
-        localStorage.setItem('token', JSON.stringify(data.token));
-        localStorage.setItem('name', name);
-        window.location.reload()
         if (data.error) {
           alert(data.error)
-        }
+        } else {
 
+          let name = JSON.stringify(data.name)
+          name = name.replace(/["]+/g, '')
+          localStorage.setItem('id', JSON.stringify(data.userId));
+          localStorage.setItem('token', JSON.stringify(data.token));
+          localStorage.setItem('name', name);
+          window.location.reload()
+
+        }
       }
 
     }
