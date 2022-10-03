@@ -81,17 +81,16 @@ data(){
     min-width: 360px;
 
     h2 {
-      position: relative;
-      bottom: 30px;
+      position: absolute;
       size: 12px;
       align-self: end;
-      
       margin-right: 5px;
     }
 
     img {
       width: 200px;
       height: 50px;
+      margin: 5px;
     }
   }
 
@@ -102,8 +101,9 @@ data(){
     align-self: flex-start;
     width: 55px;
     gap: 5px;
-    position: relative;
-    bottom: 40px;
+    position:absolute;
+    top: 60px;
+    margin-left: 5px;
 
     a {
       text-decoration: none;
