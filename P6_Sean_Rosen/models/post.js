@@ -1,12 +1,10 @@
 const {
     Sequelize,
     DataTypes,
-    UniqueConstraintError
 } = require('sequelize');
+require('dotenv').config();
 
-let dataPass = process.env.postGresPass
-dataPass = dataPass.replace(/['"]+/g, '');
-const sequelize = new Sequelize('project7', 'postgres', dataPass, {
+const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
     host: 'localhost',
     dialect: 'postgres'
 });
@@ -18,17 +16,17 @@ Post = sequelize.define('Post', {
         type: DataTypes.STRING,
         // allowNull: false
     },
-    post: {
+    text: {
         type: DataTypes.STRING,
         // allowNull: false
     },
     imageUrl: {
         type: DataTypes.STRING,
-        // allowNull: false,
-        unique: true
+       
+        
     },
     userIds: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.INTEGER)
         // allowNull: false
     },
     
@@ -39,4 +37,5 @@ Post = sequelize.define('Post', {
 
 
 module.exports = {Post};
+
 

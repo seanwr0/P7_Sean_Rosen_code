@@ -1,4 +1,18 @@
 
-@baseUrl = http://localhost:3000/api/sauces
+@baseUrl = http://localhost:3000/api/post
+
+# Sends back all users
+GET {{baseUrl}}/
+
 ###
-GET {{baseUrl}}
+
+# Signs up a new user
+POST {{baseUrl}}/
+content-type: application/json
+
+{
+
+    "userIds": "52",
+   
+}
+

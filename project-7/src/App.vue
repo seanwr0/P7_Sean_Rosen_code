@@ -2,9 +2,10 @@
 
   <div id="header">
     <img alt="Groupomania Logo" src="./assets/icon-text.png">
-
+<div id="nameEndPosts">
     <h2>{{name}}</h2>
-
+    <router-link to="/userPosts">Posts</router-link>
+  </div>
     <div id="profile">
       <router-link to="/">SignIn</router-link>
       <router-link to="/signUp">SignUp</router-link>
@@ -80,11 +81,16 @@ data(){
     background-color: #d1515a;
     min-width: 360px;
 
-    h2 {
+   #nameEndPosts {
       position: absolute;
       size: 12px;
       align-self: end;
       margin-right: 5px;
+      a{
+       font-size:  25px;
+        color: antiquewhite;
+        text-decoration: none;
+      }
     }
 
     img {

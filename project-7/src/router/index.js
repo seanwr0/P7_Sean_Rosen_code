@@ -16,6 +16,12 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: () => import( '../views/userProfile')
+  },
+
+  {
+    path: '/userPosts',
+    name: 'userPosts',
+    component: () => import( '../views/userPosts')
   }
 
 ]

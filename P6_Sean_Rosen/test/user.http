@@ -6,7 +6,7 @@ GET {{baseUrl}}/
 ###
 
 # Signs up a new user
-POST {{baseUrl}}/profile
+POST {{baseUrl}}/
 content-type: application/json
 
 {

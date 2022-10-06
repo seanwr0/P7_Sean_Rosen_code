@@ -1,4 +1,21 @@
 const fs = require('fs');
+
+
+require('dotenv').config();
+const {
+  Sequelize,
+  DataTypes
+} = require('sequelize');
+
+
+
+const sequelize = new Sequelize('project7', 'postgres',   process.env.postGresPass,{
+  host: 'localhost',
+  dialect: 'postgres'
+});
+
+
+
 let {
   Post
 } = require('../models/post');
@@ -7,34 +24,34 @@ let {
 // creates a post object and saves it to the data-base
 exports.createPost = (req, res, next) => {
 
-  if (req.file) {
-    req.body.post = JSON.parse(req.body.post);
-    const url = req.protocol + '://' + req.get('host');
+  // if (req.file) {
+  //   req.body.post = JSON.parse(req.body.post);
+  //   const url = req.protocol + '://' + req.get('host');
+
+  //   (async function () {
+  //     await sequelize.sync({});
+  //     const post = Post.build({
+  //       title: req.body.Post,
+  //       post: req.body.email,
+  //       imageUrl: url + '/images/' + req.file.filename,
+  //       userIds: req.body.userIds
+  //     });
+  //     await post.save();
+  //   })()
+  // } else {
 
     (async function () {
       await sequelize.sync({});
-      const post = Post.build({
-        title: req.body.Post,
-        post: req.body.email,
-        imageUrl: url + '/images/' + req.file.filename,
-        userIds: req.body.userIds
+      const newPost = Post.build({
+        title: req.body.postTitle,
+        text: req.body.postText,
+        imageUrl: req.body.imageUrl
       });
-      await post.save();
-    })()
-  } else {
-
-    (async function () {
-      await sequelize.sync({});
-      const post = Post.build({
-        title: req.body.Post,
-        post: req.body.email,
-        userIds: req.body.userIds
-      });
-      await post.save();
+      await newPost.save();
     })().then(
       () => {
         res.status(201).json({
-          message: 'user saved to database!'
+          message: 'post saved to database!'
         });
       }
     ).catch(
@@ -44,9 +61,9 @@ exports.createPost = (req, res, next) => {
         });
       }
     );
-  }
+  };
 
-};
+// };
 
 
 // retrieves all sauces from data-base and returns them as an array

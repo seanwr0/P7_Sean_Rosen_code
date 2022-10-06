@@ -4,24 +4,21 @@
         <h2> profile</h2>
 
         <span>
-            <p>First Name</p>
+            <p>First Name:</p>
             <p>{{userInfo.firstName}}</p>
         </span>
 
         <span>
-            <p>Last Name</p>
+            <p>Last Name:</p>
             <p>{{userInfo.lastName}}</p>
         </span>
 
         <span>
-            <p>Email</p>
+            <p>Email:</p>
             <p>{{userInfo.email}}</p>
         </span>
 
-
         <button @click="deleteProfile">Delete</button>
-
-
 
     </div>
 
@@ -42,25 +39,25 @@ export default {
     methods: {
         getUserInfo() {
             if (localStorage.getItem('token') !== null) {
-  
-            const Id = parseInt(localStorage.getItem('id'));
-            let token = localStorage.getItem('token');
-            token = token.replaceAll('"', '');
-            fetch('http://localhost:3000/api/auth/profile', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer' + ' ' + token
-                },
-                body: JSON.stringify({
-                    userId: Id,
+
+                const Id = parseInt(localStorage.getItem('id'));
+                let token = localStorage.getItem('token');
+                token = token.replaceAll('"', '');
+                fetch('http://localhost:3000/api/auth/profile', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer' + ' ' + token
+                    },
+                    body: JSON.stringify({
+                        userId: Id,
+                    })
                 })
-            })
-                .then(response => response.json())
-                .then(data => this.userInfo = data)
-        }
-    },
+                    .then(response => response.json())
+                    .then(data => this.userInfo = data)
+            }
+        },
 
         deleteProfile() {
             const Id = parseInt(localStorage.getItem('id'));
@@ -76,25 +73,18 @@ export default {
                 },
                 body: JSON.stringify({
                     userId: Id,
-                    
-                   
                 })
             })
                 .then(response => response.json())
                 .then(data => deleteProfileResponse(data))
 
-function deleteProfileResponse(data) {
-    localStorage.clear()
-    window.location.reload()
-    console.log(data)
-
-}
+            function deleteProfileResponse(data) {
+                localStorage.clear()
+                window.location.reload()
+                console.log(data)
+            }
         }
-
-
-
     },
-
     created: function () {
         this.getUserInfo()
     }
@@ -113,24 +103,8 @@ function deleteProfileResponse(data) {
     height: 500px;
     background-color: #091f43;
 
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 360px;
-        height: 200px;
-        gap: 20px;
-
-        span {
-            display: flex;
-            flex-direction: row;
-            height: 30px;
-            margin-right: 20px;
-        }
-
-        p {
-            margin: 0px;
-            width: 80px;
-        }
+    span {
+        width: 80px;
     }
 
     button {
