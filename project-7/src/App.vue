@@ -67,7 +67,6 @@ data(){
   display: flex;
   margin: 0px;
   color: white;
-  height: 1000px;
   flex-wrap: wrap;
   gap: 10px;
 
@@ -128,7 +127,7 @@ data(){
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 1000px;
+
 }
 </style>
  

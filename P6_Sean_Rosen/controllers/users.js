@@ -19,7 +19,7 @@ let {
 
 // saves email and password to data base, checks if email is unique, hashes the password
 exports.createUser = (req, res, next) => {
-  if (!req.body.fName || !req.body.lName || !req.body.userEmail || !req.body.password) {
+  if (checkUserInfo()) {
     return res.status(401).json({
       error: new Error('needs user info')
     });
@@ -50,6 +50,10 @@ exports.createUser = (req, res, next) => {
         }
       );
     })
+
+  function checkUserInfo() {
+    return !req.body.fName || !req.body.lName || !req.body.userEmail || !req.body.password;
+  }
 };
 
 // checks if user exists, and if the passwords match, returns a token
@@ -115,7 +119,7 @@ exports.getOneUser = (req, res, next) => {
   ).catch(
     (error) => {
       res.status(400).json({
-        error: error
+        error
       });
     }
   );

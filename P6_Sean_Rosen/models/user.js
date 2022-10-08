@@ -6,6 +6,11 @@ const {
 require('dotenv').config();
 
 
+let {
+    Post
+  } = require('../models/post');
+  
+
 const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
     host: 'localhost',
     dialect: 'postgres'
@@ -39,3 +44,4 @@ User = sequelize.define('User', {
 
 
 module.exports = {User};
+

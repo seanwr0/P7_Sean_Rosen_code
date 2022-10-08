@@ -9,7 +9,7 @@ const {
 
 
 
-const sequelize = new Sequelize('project7', 'postgres',   process.env.postGresPass,{
+const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
   host: 'localhost',
   dialect: 'postgres'
 });
@@ -22,7 +22,7 @@ let {
 
 
 // creates a post object and saves it to the data-base
-exports.createPost = (req, res, next) => {
+exports.createPost = async (req, res, next) => {
 
   // if (req.file) {
   //   req.body.post = JSON.parse(req.body.post);
@@ -40,40 +40,30 @@ exports.createPost = (req, res, next) => {
   //   })()
   // } else {
 
-    (async function () {
-      await sequelize.sync({});
-      const newPost = Post.build({
-        title: req.body.postTitle,
-        text: req.body.postText,
-        imageUrl: req.body.imageUrl
-      });
-      await newPost.save();
-    })().then(
-      () => {
-        res.status(201).json({
-          message: 'post saved to database!'
-        });
-      }
-    ).catch(
-      (error) => {
-        res.status(500).json({
-          error: error
-        });
-      }
-    );
-  };
-
-// };
+  try {
+    await sequelize.sync({});
+    const newPost = Post.build({
+      title: req.body.postTitle,
+      text: req.body.postText,
+      imageUrl: req.body.imageUrl,
+      name: req.body.name
+    });
+    await newPost.save();
+    res.status(201).json({
+      message: 'post saved to database!'
+    });
+  } catch (error) {
+    res.status(500).json({
+      error
+    });
+  }
+};
 
 
 // retrieves all sauces from data-base and returns them as an array
 exports.getAllPost = (req, res, next) => {
   (async function () {
-    let post = await Post.findAll({
-      where: {
-        email: req.body.email
-      }
-    });
+    let post = await Post.findAll()
     return post;
   })().then(
     (post) => {

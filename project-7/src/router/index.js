@@ -22,7 +22,15 @@ const routes = [
     path: '/userPosts',
     name: 'userPosts',
     component: () => import( '../views/userPosts')
+  },
+
+
+  {
+    path: '/postPage',
+    name: 'postpages',
+    component: () => import( '../views/postPage')
   }
+
 
 ]
 

@@ -10,6 +10,8 @@ const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass
 });
 
 
+
+
 Post = sequelize.define('Post', {
     // Model attributes are defined here
     title: {
@@ -20,6 +22,13 @@ Post = sequelize.define('Post', {
         type: DataTypes.STRING,
         // allowNull: false
     },
+
+    name: {
+        type: DataTypes.STRING,
+       
+        
+    },
+
     imageUrl: {
         type: DataTypes.STRING,
        
