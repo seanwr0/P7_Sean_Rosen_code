@@ -7,7 +7,7 @@
         <div v-if="PostShow" id="Posts">
 
 
-            <PostItem v-for="post in posts"  :key="post.id"  :name="post.name" :title="post.title"></PostItem>
+            <PostItem v-for="post in posts"  :key="post.id"  :id="post.id" :name="post.name" :title="post.title"></PostItem>
 
 
 

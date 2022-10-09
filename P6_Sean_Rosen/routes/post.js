@@ -14,7 +14,7 @@ router.use((req, res, next) => {
 });
 router.post('/post', auth, postCtrl.createPost);
 router.get('/post',  postCtrl.getAllPost);
-router.get('/post/:id',  postCtrl.getOnePost);
+router.post('/post/page',  postCtrl.getOnePost);
 
 
 module.exports = router;

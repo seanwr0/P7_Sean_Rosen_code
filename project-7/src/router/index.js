@@ -7,6 +7,14 @@ const routes = [
     name: 'signIn',
     component: signIn
   },
+
+  {
+    path: '/postPage/:id',
+    name: 'postPage',
+    component: () => import( '../views/postMessage'),
+    props: true
+  },
+
   {
     path: '/signUp',
     name: 'signUp',
@@ -25,13 +33,8 @@ const routes = [
   },
 
 
-  {
-    path: '/postPage',
-    name: 'postpages',
-    component: () => import( '../views/postPage')
-  }
 
-
+  
 ]
 
 const router = createRouter({

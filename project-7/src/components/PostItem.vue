@@ -1,24 +1,28 @@
 <template>
 
+    <router-link  :to="{ name: 'postPage', params: {id}}"   >
 
+        <div id="postCard" @click="linkHandler">
+            <div id="postCard__name">
+                <h3>{{id}}</h3>
+            </div>
 
-    <div id="postCard">
-        <div id="postCard__name">
-            <h3>{{name}}</h3>
+            <p>{{title}}</p>
+
         </div>
 
-        <p>{{title}}</p>
-
-    </div>
-
-
+    </router-link>
 </template>
 
 
 
 <script>
 export default {
-    props: ['title', 'text', 'id', 'name']
+    props: ['title', 'text', 'id', 'name'],
+
+
+
+
 }
 </script>
 
@@ -26,6 +30,11 @@ export default {
 
 
 <style  scoped lang="scss">
+a {
+    text-decoration: none;
+    color: white;
+}
+
 #postCard {
     display: flex;
     width: 320px;
@@ -34,6 +43,7 @@ export default {
     border-radius: 10px;
     margin-top: 10px;
     box-shadow: 3px 2px rgb(0, 15, 42);
+
 
     p {
         margin: 0px;

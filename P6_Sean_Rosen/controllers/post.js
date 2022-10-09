@@ -83,7 +83,7 @@ exports.getOnePost = (req, res, next) => {
   (async function () {
     let post = await Post.findOne({
       where: {
-        email: req.body.email
+        id: req.body.id
       }
     });
     return post;
