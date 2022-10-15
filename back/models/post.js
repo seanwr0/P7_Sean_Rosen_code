@@ -2,12 +2,14 @@ const {
     Sequelize,
     DataTypes,
 } = require('sequelize');
-require('dotenv').config();
-const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
-    host: 'localhost',
-    dialect: 'postgres'
-});
 
+
+let {
+    sequelize
+   } = require('../sequelize');
+   
+
+   
 Post = sequelize.define('Post', {
     // Model attributes are defined here
     title: {

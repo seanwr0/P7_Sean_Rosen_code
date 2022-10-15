@@ -1,13 +1,8 @@
-const fs = require('fs');
-require('dotenv').config();
-const {
-  Sequelize,
-  DataTypes
-} = require('sequelize');
-const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
-  host: 'localhost',
-  dialect: 'postgres'
-});
+
+let {
+  sequelize
+ } = require('../sequelize');
+ 
 
 let {
   Post

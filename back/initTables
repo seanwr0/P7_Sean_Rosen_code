@@ -1,0 +1,20 @@
+
+let {
+   sequelize
+  } = require('./sequelize');
+  
+
+
+  let {
+    User
+  } = require('./models/user');
+  
+
+  let {
+    post
+  } = require('./models/post');
+  
+    (async function () {
+        await sequelize.sync({force: true});
+      
+        })()

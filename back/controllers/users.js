@@ -1,14 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
-const {
-  Sequelize,
-  DataTypes
-} = require('sequelize');
-const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
-  host: 'localhost',
-  dialect: 'postgres'
-});
+
+let {
+  sequelize
+ } = require('../sequelize');
+ 
+
 let {
   User
 } = require('../models/user');

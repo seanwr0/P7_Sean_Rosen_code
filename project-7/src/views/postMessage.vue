@@ -116,11 +116,11 @@ main {
 
     h2 {
         color: white;
-        font-size: 35px;
+        font-size: 30px;
         margin: 0px;
         background-color: #275aab;
         width: 97%;
-        height: 40px;
+        min-height: 40px;
         padding-left: 3%;
     }
 
