@@ -5,19 +5,15 @@ const {
   Sequelize,
   DataTypes
 } = require('sequelize');
-
-
-
-const sequelize = new Sequelize('project7', 'postgres',   process.env.postGresPass,{
+const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
   host: 'localhost',
   dialect: 'postgres'
 });
-
 let {
   User
 } = require('../models/user');
 
-// saves email and password to data base, checks if email is unique, hashes the password
+/** saves email and password to data base, checks if email is unique, hashes the password */
 exports.createUser = (req, res, next) => {
   if (checkUserInfo()) {
     return res.status(401).json({
@@ -26,7 +22,6 @@ exports.createUser = (req, res, next) => {
   }
   bcrypt.hash(req.body.password, 10).then(
     (hash) => {
-
       (async function () {
         await sequelize.sync({});
         const newUser = User.build({
@@ -56,7 +51,7 @@ exports.createUser = (req, res, next) => {
   }
 };
 
-// checks if user exists, and if the passwords match, returns a token
+/**checks if user exists, and if the passwords match, returns a token*/
 exports.checkUser = (req, res, next) => {
   (async function () {
     let user = await User.findOne({
@@ -66,11 +61,9 @@ exports.checkUser = (req, res, next) => {
     });
     return user;
   })().then((user) => {
-
     if (!user) {
       return res.status(401).json({
         error: 'email not found!'
-        
       });
     }
     bcrypt.compare(req.body.password, user.passWord).then(
@@ -102,8 +95,7 @@ exports.checkUser = (req, res, next) => {
   })
 }
 
-
-// gets one item from the data-base by matching it against an id
+/** gets one item from the data-base by matching it against an id */
 exports.getOneUser = (req, res, next) => {
   (async function () {
     let user = await User.findOne({
@@ -125,7 +117,7 @@ exports.getOneUser = (req, res, next) => {
   );
 }
 
-// gets one item from the data-base by matching it against an id and deletes it
+/** gets one user from the data-base by matching it against an id and deletes it*/
 exports.deleteUser = (req, res, next) => {
   (async function () {
     let user = await User.findOne({

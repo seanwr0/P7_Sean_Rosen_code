@@ -37,6 +37,9 @@ export default {
     },
 
     methods: {
+        /**
+         * gets user info from the database 
+         */
         getUserInfo() {
             if (localStorage.getItem('token') !== null) {
 
@@ -58,7 +61,9 @@ export default {
                     .then(data => this.userInfo = data)
             }
         },
-
+        /**
+         * deletes user profile from database
+         */
         deleteProfile() {
             const Id = parseInt(localStorage.getItem('id'));
             let token = localStorage.getItem('token');

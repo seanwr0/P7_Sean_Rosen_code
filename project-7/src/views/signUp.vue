@@ -31,8 +31,6 @@
 
 </template>
 
-
-
 <script>
 export default {
   name: 'signUp',
@@ -47,11 +45,10 @@ export default {
   },
 
   methods: {
+    /** checks if all forms are filled out. then sends info to back end */
     handleSubmit() {
       if (this.firstName == "" || this.lastName == "" || this.passWord == "") {
-
         alert("must be a first and last name and password")
-
       } else {
         fetch('http://localhost:3000/api/auth/signup', {
           method: 'POST',
@@ -72,12 +69,12 @@ export default {
       }
 
       function responseHandler(data) {
-        if(data.error){
-        return alert(data.error);
-        }else{
+        if (data.error) {
+          return alert(data.error);
+        } else {
           alert("account created!")
         }
-        
+
       }
     }
   }

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 router.use(express.json());
 const userCtrl = require('../controllers/users');
-
 const auth = require('../middleware/auth');
 
 router.use((req, res, next) => {

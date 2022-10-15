@@ -1,33 +1,23 @@
 const fs = require('fs');
-
-
 require('dotenv').config();
 const {
   Sequelize,
   DataTypes
 } = require('sequelize');
-
-
-
 const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
   host: 'localhost',
   dialect: 'postgres'
 });
 
-
-
 let {
   Post
 } = require('../models/post');
 
-
-// creates a post object and saves it to the data-base
+/**creates a post object and saves it to the data-base*/
 exports.createPost = async (req, res, next) => {
-
   if (req.file) {
     req.body.post = JSON.parse(req.body.post);
     const url = req.protocol + '://' + req.get('host');
-
 
     await sequelize.sync({});
     const post = Post.build({
@@ -38,11 +28,8 @@ exports.createPost = async (req, res, next) => {
       userIds: [req.body.post.userId]
     });
     await post.save();
-
   } else {
-
     try {
-   
       await sequelize.sync({});
       const newPost = Post.build({
         title: req.body.postTitle,
@@ -51,7 +38,6 @@ exports.createPost = async (req, res, next) => {
         name: req.body.name,
         userIds: [req.body.userId]
       });
-
       await newPost.save();
       res.status(201).json({
         message: 'post saved to database!'
@@ -64,8 +50,7 @@ exports.createPost = async (req, res, next) => {
   }
 };
 
-
-// retrieves all sauces from data-base and returns them as an array
+/**retrieves all posts from data-base and returns them as an array*/
 exports.getAllPost = (req, res, next) => {
   (async function () {
     let post = await Post.findAll()
@@ -83,7 +68,7 @@ exports.getAllPost = (req, res, next) => {
   );
 };
 
-// gets one item from the data-base by matching it against an id
+/**gets one item from the data-base by matching it against an id*/
 exports.getOnePost = (req, res, next) => {
   (async function () {
     let post = await Post.findOne({
@@ -104,7 +89,7 @@ exports.getOnePost = (req, res, next) => {
     }
   );
 }
-
+/**checks if user id added to post already, if not adds it to post */
 exports.updatePostIds = (req, res, next) => {
   (async function () {
 
@@ -129,7 +114,6 @@ exports.updatePostIds = (req, res, next) => {
       return "id added";
 
     }
-
   })().then(
     (post) => {
       res.status(200).json(post);

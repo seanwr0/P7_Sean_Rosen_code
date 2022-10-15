@@ -4,19 +4,12 @@
             <div id="postContent">
                 <h2>{{postTitle}}</h2>
                 <p>{{postText}} <img :src="imageUrl" alt=""> </p>
-
-
-
-
             </div>
-
         </div>
     </main>
 </template>
   
 <script>
-
-
 
 export default {
     name: 'userPostPage',
@@ -31,7 +24,6 @@ export default {
 
     methods: {
         // gets post from the backend
-
         getPostInfo() {
             let self = this;
             fetch('http://localhost:3000/api/post/page', {
@@ -47,22 +39,16 @@ export default {
                 .then(response => response.json())
                 .then(data => responseHandler(data))
 
-
-
             function responseHandler(data) {
                 self.postTitle = data.title
                 self.postText = data.text
                 self.imageUrl = data.imageUrl
                 self.userIds = data.userIds
-
-
             }
         },
 
-
+        /** sends user id to backend to be added to id array for post*/
         updatePostIds() {
-
-
             fetch('http://localhost:3000/api/post/page', {
                 method: 'put',
                 headers: {
@@ -79,23 +65,14 @@ export default {
 
             function responseHandler(data) {
                 console.log(data)
-
-
             }
-
         },
-
-
     },
 
     created() {
         this.getPostInfo()
-
     },
-
-
     mounted() {
-
         this.updatePostIds()
     }
 }
@@ -139,14 +116,12 @@ main {
 
     h2 {
         color: white;
-        
         font-size: 35px;
         margin: 0px;
         background-color: #275aab;
         width: 97%;
         height: 40px;
         padding-left: 3%;
-
     }
 
     p {

@@ -4,18 +4,10 @@ const {
     UniqueConstraintError
 } = require('sequelize');
 require('dotenv').config();
-
-
-let {
-    Post
-  } = require('../models/post');
-  
-
 const sequelize = new Sequelize('project7', 'postgres', process.env.postGresPass, {
     host: 'localhost',
     dialect: 'postgres'
 });
-
 
 User = sequelize.define('User', {
     // Model attributes are defined here
@@ -36,12 +28,10 @@ User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    
-
 }, {
     // Other model options go here
 });
 
-
-module.exports = {User};
-
+module.exports = {
+    User
+};

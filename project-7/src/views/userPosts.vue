@@ -13,8 +13,8 @@
 
             <input type="file" method="post" @change="handleFileUpload( $event )" />
 
-            <button v-if="!form.image" @click="submitPost">Submit text</button>
-            <button v-if="form.image" @click="handleImage">Submit image</button>
+            <button v-if="!form.image" @click="submitPost">Submit</button>
+            <button v-if="form.image" @click="submitPostWithImage">Submit</button>
         </div>
     </div>
 </template>
@@ -40,6 +40,9 @@ export default {
         PostItem,
     },
     methods: {
+        /**
+         * handles the function of the make post button/go back to post button. 
+         */
         postButtonHandling() {
             this.makePostShow = !this.makePostShow;
             this.PostShow = !this.PostShow;
@@ -51,7 +54,7 @@ export default {
             }
         },
 
-        // gets an array of posts from the backend
+        /**gets an array of posts from the backend */
         getPostInfo() {
             fetch('http://localhost:3000/api/post', {
                 method: 'GET',
@@ -70,9 +73,8 @@ export default {
 
         },
 
-        // checks if title and main text has anything, then sends the post to the back end to be saved
+        /**checks if title and main text has anything, then sends the post to the back end to be saved*/
         submitPost() {
-
             if (this.postTitle == "" || this.postText == "") {
                 alert("must be a title and text")
             } else {
@@ -81,7 +83,6 @@ export default {
                     let Id = (localStorage.getItem('id'));
                     Id = parseInt(Id);
                     let Name = (localStorage.getItem('name'));
-
                     let token = localStorage.getItem('token');
                     token = token.replaceAll('"', '');
 
@@ -112,15 +113,14 @@ export default {
                     alert(data.error);
                 } else {
                     alert("Post created!");
-                    // window.location.reload()
+                    window.location.reload()
                 }
 
             }
         },
 
-
-        handleImage() {
-
+        /** handles sending post to back end if there is a image atteched, checks if title and main text has anything, */
+        submitPostWithImage() {
             let Id = (localStorage.getItem('id'));
             Id = parseInt(Id);
             let Name = (localStorage.getItem('name'));
@@ -142,7 +142,6 @@ export default {
                 headers: {
                     'Authorization': 'Bearer' + ' ' + token,
                     'Accept': 'application/json',
-
                 },
                 body: formData
             })
@@ -156,9 +155,7 @@ export default {
                     }
                 }.bind(this));
         },
-
     },
-
 
     created() {
         this.getPostInfo()

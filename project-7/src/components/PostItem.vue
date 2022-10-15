@@ -5,7 +5,6 @@
             <div id="postCard__name">
                 <h3>{{name}}</h3>
             </div>
-
             <p id="titleArea">{{title}}</p>
             <p>{{readStatis}}</p>
         </div>
@@ -21,9 +20,9 @@ export default {
         return {
             readStatis: "unread"
         }
-
     },
     methods: {
+        /** checks if user has seen post before, and updates read statis */
         handleViews() {
             let ids = this.userIds
             let id = localStorage.getItem('id')
