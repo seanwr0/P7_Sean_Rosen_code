@@ -2,31 +2,24 @@
 
     <div id="forum">
         <button @click="postButtonHandling">{{postButton}}</button>
-
-
         <div v-if="PostShow" id="Posts">
-
-
-            <PostItem v-for="post in posts"  :key="post.id"  :id="post.id" :name="post.name" :title="post.title"></PostItem>
-
-
-
+            <PostItem v-for="post in posts" :key="post.id" :id="post.id" :name="post.name" :title="post.title"
+                :userIds="post.userIds"></PostItem>
         </div>
 
         <div v-if="makePostShow" id="writePost">
             <input v-model="postTitle" placeholder="Title">
             <textarea v-model="postText" placeholder="Text"></textarea>
 
+            <input type="file" method="post" @change="handleFileUpload( $event )" />
 
-            <button @click="submitPost">Submit</button>
+            <button v-if="!form.image" @click="submitPost">Submit text</button>
+            <button v-if="form.image" @click="handleImage">Submit image</button>
         </div>
     </div>
 </template>
   
-  
-  
 <script>
-
 import PostItem from '../components/PostItem.vue'
 
 export default {
@@ -38,41 +31,25 @@ export default {
             postText: "",
             makePostShow: false,
             PostShow: true,
-
-            posts: [
-                { title: 'My journey with Vue', text: 'test' },
-                { title: 'Blogging with Vue', text: 'test' },
-                { title: 'Why Vue is so fun', text: 'test' }
-            ]
-
-
-
+            posts: [],
+            form: {}
         }
     },
 
     components: {
         PostItem,
-
     },
-
-
     methods: {
-
-
-        postButtonHandling(){
-
+        postButtonHandling() {
             this.makePostShow = !this.makePostShow;
             this.PostShow = !this.PostShow;
 
-            if(this.postButton === "Make Post"){
+            if (this.postButton === "Make Post") {
                 this.postButton = "Posts"
-            }else{
+            } else {
                 this.postButton = "Make Post"
             }
         },
-
-
-
 
         // gets an array of posts from the backend
         getPostInfo() {
@@ -87,8 +64,15 @@ export default {
                 .then(data => this.posts = data)
         },
 
+
+        handleFileUpload(e) {
+            this.form.image = e.target.files;
+
+        },
+
         // checks if title and main text has anything, then sends the post to the back end to be saved
         submitPost() {
+
             if (this.postTitle == "" || this.postText == "") {
                 alert("must be a title and text")
             } else {
@@ -101,6 +85,14 @@ export default {
                     let token = localStorage.getItem('token');
                     token = token.replaceAll('"', '');
 
+                    let userInfo = JSON.stringify({
+                        postTitle: this.postTitle,
+                        postText: this.postText,
+                        userId: Id,
+                        name: Name,
+                        imageUrl: "test"
+                    })
+
                     fetch('http://localhost:3000/api/post', {
                         method: 'POST',
                         headers: {
@@ -108,35 +100,65 @@ export default {
                             'Content-Type': 'application/json',
                             'Authorization': 'Bearer' + ' ' + token
                         },
-                        body: JSON.stringify({
-                            postTitle: this.postTitle,
-                            postText: this.postText,
-                            userId: Id,
-                            name: Name,
-                            imageUrl: "test"
-
-
-                        })
+                        body: userInfo
                     })
                         .then(response => response.json())
                         .then(data => responseHandler(data))
                 }
+
             }
             function responseHandler(data) {
                 if (data.error) {
                     alert(data.error);
                 } else {
-                   
                     alert("Post created!");
-                   
-
+                    // window.location.reload()
                 }
 
             }
-        }
+        },
 
+
+        handleImage() {
+
+            let Id = (localStorage.getItem('id'));
+            Id = parseInt(Id);
+            let Name = (localStorage.getItem('name'));
+
+            let token = localStorage.getItem('token');
+            token = token.replaceAll('"', '');
+            let formData = new FormData();
+
+            formData.append('post', JSON.stringify({
+                postTitle: this.postTitle,
+                postText: this.postText,
+                userId: Id,
+                name: Name,
+            }));
+            formData.append('image', this.form.image[0]);
+
+            fetch('http://localhost:3000/api/post', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer' + ' ' + token,
+                    'Accept': 'application/json',
+
+                },
+                body: formData
+            })
+                .then(function (response) {
+                    if (response.status != 201) {
+                        this.fetchError = response.status;
+                    } else {
+                        response.json().then(function (data) {
+                            this.fetchResponse = data;
+                        }.bind(this));
+                    }
+                }.bind(this));
+        },
 
     },
+
 
     created() {
         this.getPostInfo()
@@ -158,11 +180,11 @@ export default {
     gap: 10px;
     margin-bottom: 50px;
     padding-bottom: 20px;
+
     button {
         width: 275px;
 
     }
-
 }
 
 #writePost {
@@ -192,7 +214,6 @@ export default {
     min-height: 500px;
     gap: 5px;
     padding-bottom: 30px;
-    
 }
 </style>
   

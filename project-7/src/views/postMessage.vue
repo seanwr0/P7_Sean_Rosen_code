@@ -2,12 +2,14 @@
     <main>
         <div id="forum">
             <div id="postContent">
-                
                 <h2>{{postTitle}}</h2>
-                <p>{{postText}}</p>
+                <p>{{postText}} <img :src="imageUrl" alt=""> </p>
+
+
+
 
             </div>
-    
+
         </div>
     </main>
 </template>
@@ -22,11 +24,14 @@ export default {
         return {
             postTitle: "",
             postText: "",
+            imageUrl: "",
+            userIds: []
         }
     },
 
     methods: {
         // gets post from the backend
+
         getPostInfo() {
             let self = this;
             fetch('http://localhost:3000/api/post/page', {
@@ -42,17 +47,56 @@ export default {
                 .then(response => response.json())
                 .then(data => responseHandler(data))
 
+
+
             function responseHandler(data) {
                 self.postTitle = data.title
                 self.postText = data.text
+                self.imageUrl = data.imageUrl
+                self.userIds = data.userIds
+
 
             }
         },
+
+
+        updatePostIds() {
+
+
+            fetch('http://localhost:3000/api/post/page', {
+                method: 'put',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: parseInt(localStorage.getItem('id')),
+                    postId: parseInt(this.$route.params.id),
+                })
+            })
+                .then(response => response.json())
+                .then(data => responseHandler(data))
+
+            function responseHandler(data) {
+                console.log(data)
+
+
+            }
+
+        },
+
 
     },
 
     created() {
         this.getPostInfo()
+
+    },
+
+
+    mounted() {
+
+        this.updatePostIds()
     }
 }
 
@@ -60,13 +104,14 @@ export default {
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-main{
+main {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     height: 600px;
 }
+
 #forum {
     display: flex;
     flex-direction: column;
@@ -84,7 +129,7 @@ main{
     color: black;
     display: flex;
     flex-direction: column;
-    background-color: #ced7e6; ;
+    background-color: #ced7e6;
     width: 70%;
     min-height: 500px;
     gap: 5px;
@@ -94,17 +139,28 @@ main{
 
     h2 {
         color: white;
+        
         font-size: 35px;
         margin: 0px;
         background-color: #275aab;
         width: 97%;
         height: 40px;
         padding-left: 3%;
-        
+
     }
-    p{
+
+    p {
+        display: flex;
+        flex-direction: column;
         margin: 15px;
+        flex-wrap: wrap;
     }
+}
+
+img {
+    justify-self: flex-end;
+    min-width: 225px;
+    height: 200px;
 }
 </style>
   
