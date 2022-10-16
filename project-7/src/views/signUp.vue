@@ -32,6 +32,9 @@
 </template>
 
 <script>
+
+import router from '@/router'
+
 export default {
   name: 'signUp',
 
@@ -45,6 +48,7 @@ export default {
   },
 
   methods: {
+
     /** checks if all forms are filled out. then sends info to back end */
     handleSubmit() {
       if (this.firstName == "" || this.lastName == "" || this.passWord == "") {
@@ -73,6 +77,7 @@ export default {
           return alert(data.error);
         } else {
           alert("account created!")
+          router.push('/')
         }
 
       }
