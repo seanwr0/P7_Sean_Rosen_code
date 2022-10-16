@@ -136,6 +136,8 @@ img {
     justify-self: flex-end;
     min-width: 225px;
     height: 200px;
+    object-fit: contain;
+    margin-top: 40px;
 }
 </style>
   

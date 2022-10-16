@@ -121,45 +121,61 @@ export default {
 
         /** handles sending post to back end if there is a image atteched, checks if title and main text has anything, */
         submitPostWithImage() {
-            let Id = (localStorage.getItem('id'));
-            Id = parseInt(Id);
-            let Name = (localStorage.getItem('name'));
+            if (this.postTitle == "") {
+                alert("must be a title and text")
+            } else {
+                if (localStorage.getItem('token') !== null) {
 
-            let token = localStorage.getItem('token');
-            token = token.replaceAll('"', '');
-            let formData = new FormData();
 
-            formData.append('post', JSON.stringify({
-                postTitle: this.postTitle,
-                postText: this.postText,
-                userId: Id,
-                name: Name,
-            }));
-            formData.append('image', this.form.image[0]);
+                    let Id = (localStorage.getItem('id'));
+                    Id = parseInt(Id);
+                    let Name = (localStorage.getItem('name'));
 
-            fetch('http://localhost:3000/api/post', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer' + ' ' + token,
-                    'Accept': 'application/json',
-                },
-                body: formData
-            })
-                .then(function (response) {
-                    if (response.status != 201) {
-                        this.fetchError = response.status;
-                    } else {
-                        response.json().then(function (data) {
-                            this.fetchResponse = data;
-                        }.bind(this));
-                    }
-                }.bind(this));
+                    let token = localStorage.getItem('token');
+                    token = token.replaceAll('"', '');
+                    let formData = new FormData();
+
+                    formData.append('post', JSON.stringify({
+                        postTitle: this.postTitle,
+                        postText: this.postText,
+                        userId: Id,
+                        name: Name,
+                    }));
+                    formData.append('image', this.form.image[0]);
+
+                    fetch('http://localhost:3000/api/post', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer' + ' ' + token,
+                            'Accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(data => imageResponseHandler(data))
+
+                }
+
+
+
+            }
+
+            function imageResponseHandler(data) {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert("Post created!");
+                    window.location.reload()
+                }
+
+            }
+
         },
     },
-
-    created() {
-        this.getPostInfo()
-    }
+        created() {
+            this.getPostInfo()
+        }
+    
 }
 
 </script>

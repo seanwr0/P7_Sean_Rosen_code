@@ -1,8 +1,7 @@
-
 let {
   sequelize
- } = require('../sequelize');
- 
+} = require('../sequelize');
+
 
 let {
   Post
@@ -13,16 +12,24 @@ exports.createPost = async (req, res, next) => {
   if (req.file) {
     req.body.post = JSON.parse(req.body.post);
     const url = req.protocol + '://' + req.get('host');
-
-    await sequelize.sync({});
-    const post = Post.build({
-      title: req.body.post.postTitle,
-      text: req.body.post.postText,
-      imageUrl: url + '/images/' + req.file.filename,
-      name: req.body.post.name,
-      userIds: [req.body.post.userId]
-    });
-    await post.save();
+    try {
+      await sequelize.sync({});
+      const post = Post.build({
+        title: req.body.post.postTitle,
+        text: req.body.post.postText,
+        imageUrl: url + '/images/' + req.file.filename,
+        name: req.body.post.name,
+        userIds: [req.body.post.userId]
+      });
+      await post.save();
+      res.status(201).json({
+        message: 'post saved to database!'
+      });
+    } catch (error) {
+      res.status(500).json({
+        error
+      });
+    }
   } else {
     try {
       await sequelize.sync({});
