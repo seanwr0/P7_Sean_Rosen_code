@@ -1,31 +1,23 @@
 <template>
   <div id="submit-form">
-
     <h2> SignIn</h2>
-
     <form @submit="handleSubmit">
       <span>
         <p>Email</p>
         <input type="email" v-model="email" />
       </span>
-
       <span>
         <p>Password</p>
         <input type="password" v-model="passWord" />
       </span>
-
       <button>submit</button>
     </form>
-
   </div>
-
 </template>
-
 
 <script>
 export default {
   name: 'signIn',
-
   data() {
     return {
       email: "",
@@ -53,16 +45,15 @@ export default {
         .then(data => saveToLocalStorage(data))
 
       function saveToLocalStorage(data) {
-
         if (data.error) {
           alert(data.error)
         } else {
-
           let name = JSON.stringify(data.name)
           name = name.replace(/["]+/g, '')
           localStorage.setItem('id', JSON.stringify(data.userId));
           localStorage.setItem('token', JSON.stringify(data.token));
           localStorage.setItem('name', name);
+          alert("You are SignedIn")
           window.location.reload()
 
         }

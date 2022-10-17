@@ -12,8 +12,8 @@ router.use((req, res, next) => {
   next();
 });
 router.post('/post', auth, multer, postCtrl.createPost);
-router.get('/post',  postCtrl.getAllPost);
-router.post('/post/page',  postCtrl.getOnePost);
+router.get('/post', auth, postCtrl.getAllPost);
+router.post('/post/page',  auth, postCtrl.getOnePost);
 router.put('/post/page',  postCtrl.updatePostIds);
 
 module.exports = router;

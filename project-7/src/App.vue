@@ -1,64 +1,62 @@
 <template>
-
   <div id="header">
     <img alt="Groupomania Logo" src="./assets/icon-text.png">
-<div id="nameEndPosts">
-    <h2>{{name}}</h2>
-    <router-link to="/userPosts">Posts</router-link>
-  </div>
-    <div id="profile">
-      <router-link to="/">SignIn</router-link>
-      <router-link to="/signUp">SignUp</router-link>
-
-      <p @click="handleSignOut">SignOut</p>
-
-      <router-link to="/profile"> Profile </router-link>
+    <div id="nameEndPosts">
+      <router-link to="/userPosts" v-if="signedIn">Posts</router-link>
     </div>
-
+    <div id="profile">
+      <router-link to="/" v-if="!signedIn">SignIn</router-link>
+      <router-link to="/signUp">SignUp</router-link>
+      <p @click="handleSignOut" v-if="signedIn">SignOut</p>
+      <router-link to="/profile" v-if="signedIn"> Profile </router-link>
+    </div>
   </div>
-
   <div id="body">
     <router-view />
   </div>
-
 </template>
  
 <script>
 export default {
   name: 'App',
 
-data(){
-  return{
-
-    name: ""
-  }
-},
+  data() {
+    return {
+      name: "",
+      signedIn: false
+    }
+  },
   methods: {
     handleSignOut() {
       localStorage.clear();
       window.location.reload()
     },
 
-    getName(){
-       let Name = localStorage.getItem('name');
-       if(Name === 'undefined') {
-       this.name = ''
-       }else{
-       
+    getName() {
+      let Name = localStorage.getItem('name');
+      if (Name === 'undefined') {
+        this.name = ''
+      } else {
         this.name = Name
-       }
-       
-    }
+      }
 
+    },
+
+    setLinks() {
+      let loggedIn = localStorage.getItem('token')
+      if (!loggedIn) {
+        this.signedIn = false
+      } else {
+        this.signedIn = true
+      }
+    }
   },
 
   created: function () {
-        this.getName()
-    }
-
-
+    this.getName()
+    this.setLinks()
+  }
 }
-
 
 </script>
  
@@ -80,13 +78,14 @@ data(){
     background-color: #d1515a;
     min-width: 360px;
 
-   #nameEndPosts {
+    #nameEndPosts {
       position: absolute;
       size: 12px;
       align-self: end;
       margin-right: 5px;
-      a{
-       font-size:  25px;
+
+      a {
+        font-size: 25px;
         color: antiquewhite;
         text-decoration: none;
       }
@@ -106,7 +105,7 @@ data(){
     align-self: flex-start;
     width: 55px;
     gap: 5px;
-    position:absolute;
+    position: absolute;
     top: 60px;
     margin-left: 5px;
 

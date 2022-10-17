@@ -1,5 +1,4 @@
 <template>
-
   <div id="submit-form">
     <h2> Signup</h2>
     <form @submit.prevent="handleSubmit">
@@ -7,28 +6,21 @@
         <p>First Name</p>
         <input type="firstName" v-model="firstName" />
       </span>
-
       <span>
         <p>Last Name</p>
         <input type="lastName" v-model="lastName" />
       </span>
-
       <span>
         <p>Email</p>
         <input type="email" v-model="email" />
       </span>
-
       <span>
         <p>Password</p>
         <input type="password" v-model="passWord" />
       </span>
-
       <button>submit</button>
-
     </form>
-
   </div>
-
 </template>
 
 <script>
@@ -79,7 +71,6 @@ export default {
           alert("account created!")
           router.push('/')
         }
-
       }
     }
   }

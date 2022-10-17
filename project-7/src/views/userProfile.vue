@@ -1,41 +1,31 @@
 <template>
-
     <div id="submit-form">
         <h2> profile</h2>
-
         <span>
             <p>First Name:</p>
             <p>{{userInfo.firstName}}</p>
         </span>
-
         <span>
             <p>Last Name:</p>
             <p>{{userInfo.lastName}}</p>
         </span>
-
         <span>
             <p>Email:</p>
             <p>{{userInfo.email}}</p>
         </span>
-
         <button @click="deleteProfile">Delete</button>
-
     </div>
-
 </template>
   
-  
-  
 <script>
+import router from '@/router'
 export default {
     name: 'userProfile',
-
     data() {
         return {
             userInfo: {}
         }
     },
-
     methods: {
         /**
          * gets user info from the database 
@@ -85,7 +75,8 @@ export default {
 
             function deleteProfileResponse(data) {
                 localStorage.clear()
-                window.location.reload()
+                alert("Account Deleted")
+                router.push('/')
                 console.log(data)
             }
         }
