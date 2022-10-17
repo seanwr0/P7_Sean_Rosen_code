@@ -29,7 +29,9 @@ export default {
   methods: {
     handleSignOut() {
       localStorage.clear();
+      alert("You are Signed Out")
       window.location.reload()
+      
     },
 
     getName() {
@@ -68,7 +70,6 @@ export default {
   flex-wrap: wrap;
   gap: 10px;
 
-
   #header {
     display: flex;
     flex-direction: column;
@@ -82,7 +83,7 @@ export default {
       position: absolute;
       size: 12px;
       align-self: end;
-      margin-right: 5px;
+      margin: 20px;
 
       a {
         font-size: 25px;
